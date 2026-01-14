@@ -3,46 +3,46 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
 
-# 업로드한 나눔바른고딕 폰트 경로 설정
-font_path = "/mnt/data/NanumBarunGothic.ttf"  # 업로드한 파일 경로
+# Correct font path
+font_path = "/mnt/data/NanumBarunGothic.ttf"  # Path to the font file
+
+# Apply the font to matplotlib
 font_prop = font_manager.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = font_prop.get_name()
 
-# 사용자 입력 받기
-n = st.slider('반복 횟수 (n)', 10, 1000, 50)
-alpha = st.slider('절대오차 가중치 (α)', 0.0, 2.0, 1.0)
-beta = st.slider('비율오차 가중치 (β)', 0.0, 2.0, 0.5)
+# User inputs for the number of repetitions and weights
+n = st.slider('Number of repetitions (n)', 10, 1000, 50)
+alpha = st.slider('Weight for absolute error (α)', 0.0, 2.0, 1.0)
+beta = st.slider('Weight for relative error (β)', 0.0, 2.0, 0.5)
 
-# 오차 계산
-e = 0.5  # 절대오차 (°C)
-p = 0.02  # 비율오차 (2%)
-A = 100  # 초기 값 (습도 센서 초기값)
+# Error values
+e = 0.5  # Absolute error (°C)
+p = 0.02  # Relative error (2%)
+A = 100  # Initial value (for relative error)
 
-# 절대오차 계산 (등차수열)
-E_absolute = np.array([n * e for n in range(1, n + 1)])
+# Calculating errors
+absolute_error = np.array([n * e for n in range(1, n + 1)])
+relative_error = A * ((1 + p)**np.arange(1, n + 1) - 1)
 
-# 비율오차 계산 (등비수열)
-E_relative = A * ((1 + p)**np.arange(1, n + 1) - 1)
+# Total combined error (weighted sum)
+total_error = alpha * absolute_error + beta * relative_error
 
-# 복합 오차 계산
-E_total = alpha * E_absolute + beta * E_relative
-
-# 시각화
+# Plotting
 fig, ax = plt.subplots(figsize=(10, 6))
-ax.plot(range(1, n + 1), E_absolute, label='절대오차', color='blue')
-ax.plot(range(1, n + 1), E_relative, label='비율오차', color='red')
-ax.plot(range(1, n + 1), E_total, label='복합 오차', color='purple')
+ax.plot(range(1, n + 1), absolute_error, label='Absolute Error', color='blue')
+ax.plot(range(1, n + 1), relative_error, label='Relative Error', color='red')
+ax.plot(range(1, n + 1), total_error, label='Total Error', color='purple')
 
-ax.set_title('오차 누적 비교')
-ax.set_xlabel('반복 횟수 (n)')
-ax.set_ylabel('오차 크기')
-ax.set_yscale('log')  # 로그 스케일
+ax.set_title('Error Accumulation Comparison')
+ax.set_xlabel('Number of repetitions (n)')
+ax.set_ylabel('Error size')
+ax.set_yscale('log')  # Log scale
 ax.legend()
 
-# 그래프 출력
+# Show the plot
 st.pyplot(fig)
 
-# 값 표시
-st.write(f"최종 절대오차: {E_absolute[-1]:.2f} °C")
-st.write(f"최종 비율오차: {E_relative[-1]:.2f} %")
-st.write(f"최종 복합오차: {E_total[-1]:.2f}")
+# Display values
+st.write(f"Final Absolute Error: {absolute_error[-1]:.2f} °C")
+st.write(f"Final Relative Error: {relative_error[-1]:.2f} %")
+st.write(f"Final Total Error: {total_error[-1]:.2f}")
