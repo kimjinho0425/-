@@ -13,7 +13,7 @@ p = 0.02  # 비율오차 (2%)
 A = 100  # 초기 값 (습도 센서 초기값)
 
 # 절대오차 계산 (등차수열)
-E_absolute = np.array([e * (n) for n in range(1, n + 1)])  # 선형 증가하도록 수정
+E_absolute = np.array([e * n for n in range(1, n + 1)])
 
 # 비율오차 계산 (절대값으로 변경)
 E_relative = A * ((1 + p)**np.arange(1, n + 1) - 1)  # 절대값으로 계산
@@ -35,7 +35,10 @@ ax.plot(range(1, n + 1), E_total, label='Total Error', color='purple')
 ax.set_title('Error Accumulation Comparison')
 ax.set_xlabel('Number of repetitions (n)')
 ax.set_ylabel('Error size')
-ax.set_yscale('log')  # Log scale for better visualization of large differences
+
+# 이제 로그 스케일을 제거하고, 선형 그래프를 그립니다.
+# ax.set_yscale('log')  # 로그 스케일 제거
+
 ax.legend()
 
 # 그래프 출력
