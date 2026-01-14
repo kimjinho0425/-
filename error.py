@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
 
-# 올바른 경로로 업로드된 폰트 파일 경로 설정
-font_path = "/mnt/data/D8B30F8C-97C9-4E6D-A499-810A6B22D631.ttf"  # 업로드한 파일 경로로 수정
+# 업로드한 나눔바른고딕 폰트 경로 설정
+font_path = "/mnt/data/NanumBarunGothic.ttf"  # 업로드한 파일 경로
 font_prop = font_manager.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = font_prop.get_name()
 
