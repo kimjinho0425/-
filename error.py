@@ -1,6 +1,12 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
+
+# 나눔고딕 폰트 경로 설정 (GitHub에서 다운받은 경로로 수정)
+font_path = "/mnt/data/나눔고딕.ttf"  # 실제 경로로 수정 필요
+font_prop = font_manager.FontProperties(fname=font_path)
+plt.rcParams['font.family'] = font_prop.get_name()
 
 # 사용자 입력 받기
 n = st.slider('반복 횟수 (n)', 10, 1000, 50)
