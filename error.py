@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
 
-# 나눔고딕 폰트 경로 설정 (GitHub에서 다운받은 경로로 수정)
-font_path = "/mnt/data/나눔고딕.ttf"  # 실제 경로로 수정 필요
+# 폰트 경로 설정 (실제 경로로 수정 필요)
+font_path = "/mnt/data/2E46E770-A866-47F1-B970-4E5C5412107F.ttf"  # 업로드한 나눔고딕 폰트 경로
 font_prop = font_manager.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = font_prop.get_name()
 
