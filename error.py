@@ -2,28 +2,35 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-# User input for number of repetitions and error weights
-n = st.slider('Number of repetitions (n)', 10, 1000, 50)
-alpha = st.slider('Weight for absolute error (α)', 0.0, 2.0, 1.0)
-beta = st.slider('Weight for relative error (β)', 0.0, 2.0, 0.5)
+# 사용자 입력 받기
+n = st.slider('반복 횟수 (n)', 10, 1000, 50)
+alpha = st.slider('절대오차 가중치 (α)', 0.0, 2.0, 1.0)  # alpha는 절대오차 가중치
+beta = st.slider('비율오차 가중치 (β)', 0.0, 2.0, 1.0)  # beta는 비율오차 가중치
 
-# Error values
-e = 0.5  # Absolute error (°C)
-p = 0.02  # Relative error (2%)
-A = 100  # Initial value (for relative error)
+# 오차 계산
+e = 0.5  # 절대오차 (°C)
+p = 0.02  # 비율오차 (2%)
+A = 100  # 초기 값 (습도 센서 초기값)
 
-# Calculating errors
-absolute_error = np.array([n * e for n in range(1, n + 1)])
-relative_error = A * ((1 + p)**np.arange(1, n + 1) - 1)
+# 절대오차 계산 (등차수열)
+E_absolute = np.array([n * e for n in range(1, n + 1)])
 
-# Total combined error (weighted sum)
-total_error = alpha * absolute_error + beta * relative_error
+# 비율오차 계산 (등비수열)
+E_relative = A * ((1 + p)**np.arange(1, n + 1) - 1)
 
-# Plotting
+# 복합 오차 계산 (절대오차 + 비율오차)
+E_total = E_absolute + E_relative  # 더하는 형태로 복합 오차 계산
+
+# 결과 출력
+st.write(f"최종 절대오차: {E_absolute[-1]:.2f} °C")
+st.write(f"최종 비율오차: {E_relative[-1]:.2f} %")
+st.write(f"최종 복합오차: {E_total[-1]:.2f}")
+
+# 그래프 시각화
 fig, ax = plt.subplots(figsize=(10, 6))
-ax.plot(range(1, n + 1), absolute_error, label='Absolute Error', color='blue')
-ax.plot(range(1, n + 1), relative_error, label='Relative Error', color='red')
-ax.plot(range(1, n + 1), total_error, label='Total Error', color='purple')
+ax.plot(range(1, n + 1), E_absolute, label='Absolute Error', color='blue')
+ax.plot(range(1, n + 1), E_relative, label='Relative Error', color='red')
+ax.plot(range(1, n + 1), E_total, label='Total Error', color='purple')
 
 ax.set_title('Error Accumulation Comparison')
 ax.set_xlabel('Number of repetitions (n)')
@@ -31,10 +38,5 @@ ax.set_ylabel('Error size')
 ax.set_yscale('log')  # Log scale
 ax.legend()
 
-# Display the plot
+# 그래프 출력
 st.pyplot(fig)
-
-# Display values
-st.write(f"Final Absolute Error: {absolute_error[-1]:.2f} °C")
-st.write(f"Final Relative Error: {relative_error[-1]:.2f} %")
-st.write(f"Final Total Error: {total_error[-1]:.2f}")
