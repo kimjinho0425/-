@@ -5,15 +5,15 @@ import matplotlib.pyplot as plt
 # 사용자 입력 받기
 n = st.slider('반복 횟수 (n)', 10, 1000, 50)
 alpha = st.slider('절대오차 가중치 (α)', 0.0, 2.0, 1.0)  # alpha는 절대오차 가중치
-beta = st.slider('비율오차 가중치 (β)', 0.0, 2.0, 1.0)  # beta는 비율오차 가중치
+# beta는 이제 필요없으므로 제거됨
 
 # 오차 계산
 e = 0.5  # 절대오차 (°C)
 p = 0.02  # 비율오차 (2%)
 A = 100  # 초기 값 (습도 센서 초기값)
 
-# 절대오차 계산 (등차수열의 합)
-E_absolute = np.array([e * (n * (n + 1)) / 2 for n in range(1, n + 1)])  # 이차 함수 형태로 수정
+# 절대오차 계산 (등차수열)
+E_absolute = np.array([e * n for n in range(1, n + 1)])
 
 # 비율오차 계산 (등비수열)
 E_relative = A * ((1 + p)**np.arange(1, n + 1) - 1)
