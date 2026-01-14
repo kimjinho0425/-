@@ -13,7 +13,7 @@ p = 0.02  # 비율오차 (2%)
 A = 100  # 초기 값 (습도 센서 초기값)
 
 # 절대오차 계산 (등차수열)
-E_absolute = np.array([e * n for n in range(1, n + 1)])
+E_absolute = np.array([e * (n) for n in range(1, n + 1)])  # 선형 증가하도록 수정
 
 # 비율오차 계산 (절대값으로 변경)
 E_relative = A * ((1 + p)**np.arange(1, n + 1) - 1)  # 절대값으로 계산
