@@ -1,16 +1,8 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import font_manager
 
-# Correct font path
-font_path = "/mnt/data/NanumBarunGothic.ttf"  # Path to the font file
-
-# Apply the font to matplotlib
-font_prop = font_manager.FontProperties(fname=font_path)
-plt.rcParams['font.family'] = font_prop.get_name()
-
-# User inputs for the number of repetitions and weights
+# User input for number of repetitions and error weights
 n = st.slider('Number of repetitions (n)', 10, 1000, 50)
 alpha = st.slider('Weight for absolute error (α)', 0.0, 2.0, 1.0)
 beta = st.slider('Weight for relative error (β)', 0.0, 2.0, 0.5)
@@ -39,7 +31,7 @@ ax.set_ylabel('Error size')
 ax.set_yscale('log')  # Log scale
 ax.legend()
 
-# Show the plot
+# Display the plot
 st.pyplot(fig)
 
 # Display values
