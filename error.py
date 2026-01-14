@@ -3,9 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
 
-# 웹 폰트 로딩 (예시로 'Nanum Gothic' 사용)
-font_url = "https://github.com/kimjinho0425/NanumGothic-Regular.ttf"
-font_prop = font_manager.FontProperties(fname=font_url)
+# 업로드한 나눔고딕 폰트 경로 (파일 경로 수정 필요)
+font_path = "/mnt/data/92650CCF-953D-4864-BD74-A91429B253F5.ttf"  # 파일 경로 수정
+font_prop = font_manager.FontProperties(fname=font_path)
 plt.rcParams['font.family'] = font_prop.get_name()
 
 # 사용자 입력 받기
